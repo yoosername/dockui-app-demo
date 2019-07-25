@@ -11,7 +11,7 @@ const bodyParser = require("koa-bodyparser");
 const multer = require("koa-multer");
 
 // Defaults
-const HTTP_PORT = process.env.HTTP_PORT ? process.env.HTTP_PORT : 3000;
+const HTTP_PORT = process.env.HTTP_PORT ? process.env.HTTP_PORT : 3333;
 const DEFAULT_HTTP_SCHEME = "http";
 const HTTP_SCHEME = process.env.HTTP_SCHEME
   ? process.env.HTTP_SCHEME
