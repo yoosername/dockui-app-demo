@@ -43,29 +43,7 @@ modules:
   #   url: /users
   #   weight: 1
 
-  # Provides:
-  #   Identification checking for existing sessions
-  #     (e.g. if creds in header, return a real user object from some userDB)
-  #   Authentication flow for unidentified users
-  #     (e.g. if no creds in header or creds wrong, send 501 or 301 request redirect to login page (provided elsewhere)
-  - type: AuthenticationProvider
-    name: Form Auth Provider
-    key: dockui.dashboard.auth.form
-    url: /identity_check
-    weight: 0
-
-  # Provides:
-  #   Check that the logged in Principle (user/service) has access to the requested resource
-  #     - if user is known and access granted return 200
-  #     - if user is known but access is not granted return 401
-  #     - if user is not known return 501 Not Implemented
-  - type: AuthorizationProvider
-    name: Simple Role Based Permissions service
-    key: dockui.dashboard.permissions
-    url: /permission_check
-    weight: 0
-
-    # Inject Page fragment
+  # Inject Page fragment
   - type: WebFragment
     name: Dashboard Welcome Header
     key: dockui.dashboard.fragments.header
@@ -187,37 +165,6 @@ modules:
     url: /pages/admin.html
     decorator: dockui.dashboard.decorator
     enabled: true
-
-  - type: WebPage
-    name: Example Login page for our authProvider above
-    key: dockui.dashboard.login
-    url: /pages/login.html
-    aliases:
-      - login
-    enabled: true
-
-    # Proxy request directly to an existing API
-  - type: Api
-    name: Dashboard Backend
-    key: dockui.dashboard.api
-    aliases:
-      - api/users # /app/dashboard/api/users
-    version: 1.0
-    url: /rest/api/1.0/users
-    cache:
-      enabled: true
-      ttl: 60000ms
-    auth:
-      - type: role
-        role: DASHBOARD_VIEW
-        action:
-          - GET
-      - type: role
-        role: DASHBOARD_ADMIN
-        action:
-          - POST
-          - PUT
-          - DELETE
 
     # Receive POST request on given framework events
   - type: Webhook
